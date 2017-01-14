@@ -1,3 +1,16 @@
+* {
+    margin: 0; padding: 0;
+}
+
 body {
-  background-color: #594f4f;
+    background-color: #594f4f;
  }
+main {
+    background-color: #fff;
+    width: 800px;
+    height: 600px;
+    padding: 3px;
+    margin: auto;
+}
+canvas {
+}
