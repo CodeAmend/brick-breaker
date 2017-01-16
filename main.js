@@ -10,10 +10,10 @@ var mouse = {
 var ballX = 0;
 var ballY = 0;
 
-var ballSpeedX = 1;
-var ballSpeedY = 2;
+var ballSpeedX = 10;
+var ballSpeedY = 10;
 
-var paddleHeight = 10;
+var paddleHeight = 12;
 var paddleWidth = 100;
 var paddleDistance = canvasHeight * 0.10;
 
@@ -27,7 +27,7 @@ window.onload = function() {
 
     context = canvas.getContext('2d');
 
-    var framesPerSecond;
+    var framesPerSecond = 30;
 
     setInterval(updateAll, 1000 / framesPerSecond);
 }
@@ -60,7 +60,7 @@ function drawAll() {
     context.fill();
 
     // draw paddle
-    drawRect(mouse.x - paddleWidth / 2, canvas.height - paddleDistance, paddleWidth, paddleHeight, 'white' );
+    drawRect(mouse.x - paddleWidth / 2, canvas.height - paddleDistance, paddleWidth, paddleHeight, 'red' );
 }
 
 function drawRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
@@ -72,16 +72,35 @@ function drawRect(topLeftX, topLeftY, boxWidth, boxHeight, fillColor) {
 function moveAll() {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
+
+    // right
     if (ballX > canvas.width) {
         ballSpeedX *= -1;
     }
+    // left
     if (ballX < 0) {
         ballSpeedX *= -1;
     }
+    // bottom
     if (ballY > canvas.height) {
         ballSpeedY *= -1;
     }
+    // top
     if (ballY < 0) {
         ballSpeedY *= -1;
+    }
+
+    var paddleTopEdge = canvas.height - paddleDistance;
+    var paddleBottomEdge =  canvas.height - paddleDistance + paddleHeight;
+    var paddleLeftEdge = mouse.x - paddleWidth / 2;
+    var paddleRightEdge = mouse.x + paddleWidth /2;
+
+    if (ballX > paddleLeftEdge &&
+        ballX < paddleRightEdge &&
+        ballY < paddleBottomEdge &&
+        ballY > paddleTopEdge) {
+            ballSpeedY *= -1;
+            ballSpeedX =  (ballX - (paddleLeftEdge + paddleWidth / 2)) * 0.35;
+            console.log("hey")
     }
 }
