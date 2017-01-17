@@ -94,10 +94,12 @@ function ballMove() {
     // right
     if (ballX > canvas.width) {
         ballSpeedX *= -1;
+        ballX =canvas.width;
     }
     // left
     if (ballX < 0) {
         ballSpeedX *= -1;
+        ballX = 0;
     }
     // bottom
     if (ballY > canvas.height) {
