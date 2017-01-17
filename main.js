@@ -9,7 +9,7 @@ var ballX = canvasWidth / 2;
 var ballY = canvasHeight - 100;
 
 var ballSpeedX = 5;
-var ballSpeedY = -8;
+var ballSpeedY = -10;
 
 var paddleHeight = 12;
 var paddleWidth = 100;
@@ -73,8 +73,8 @@ function drawAll() {
 function ballReset() {
     ballX = canvas.width / 2;
     ballY = canvas.height - paddleDistance;
-    ballspeedX = 2;
-    ballSpeedY = -5;
+    ballspeedX = 3;
+    ballSpeedY *= -1;
 }
 function drawText(text, x, y, color) {
     context.fillStyle = color;
@@ -101,7 +101,7 @@ function ballMove() {
     }
     // bottom
     if (ballY > canvas.height) {
-        ballSpeedY *= -1;
+        ballReset();
     }
     // top
     if (ballY < 0) {
@@ -180,7 +180,10 @@ function ballBrickHandling() {
             }
         }
         if (bothTestFailed) {
-            ballSpeedX *= -1;
+            var i = indexOfColRow(ballCol, prevBallRow);
+            if (brickGrid[i] != undefined) {
+                ballSpeedX *= -1;
+            }
             ballSpeedY *= -1;
         }
 
